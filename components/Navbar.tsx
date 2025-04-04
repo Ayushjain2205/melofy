@@ -1,7 +1,7 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { client } from "@/lib/client"
 import { ConnectButton } from "thirdweb/react"
+import { baseSepolia } from "thirdweb/chains"
 
 export function Navbar() {
   return (
@@ -24,8 +24,7 @@ export function Navbar() {
           <Link href="/" className="text-[#FF99D1] hover:text-[#FF00FF] transition-colors font-exo2">
             Explore
           </Link>
-          {/* <Button className="bg-[#FF00FF] text-white hover:bg-[#FF66B8] font-exo2">Connect Wallet</Button> */}
-<ConnectButton client={client} />
+        <ConnectButton client={client} chain={baseSepolia} />
         </div>
       </div>
     </nav>
