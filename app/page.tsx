@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
 import { SongCard } from "@/components/SongCard"
+import Link from "next/link"
 
 export default function Home() {
   const songs = [
@@ -88,12 +88,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0D0D15] text-white">
       {/* Hero */}
-      <section className="text-center py-28">
+      <section className="text-center py-15">
         <h2 className="text-5xl md:text-7xl font-bold mb-4 gradient-text font-audiowide">
-          Make money with your AI music.
+          Own Your Sound.
         </h2>
         <p className="text-lg md:text-xl text-[#FF99D1] font-exo2">
-          Generate unreleased tracks and profit when they gain traction.
+          Create original AI music, mint it on-chain, and trade it with the world.
         </p>
       </section>
 
@@ -106,36 +106,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trading Stats */}
-      <section className="text-center py-16">
-        <p className="text-xl text-[#FF99D1] font-exo2">
-          Over <span className="text-[#00FFFF]">$330,000</span> in Melofy songs traded.
-        </p>
-        <div className="flex justify-center gap-4 mt-6">
-          <Button size="lg" className="bg-[#FF00FF] text-white hover:bg-[#FF66B8] font-exo2">
-            Start trading
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-[#00FFFF] text-[#00FFFF] hover:bg-[#00FFFF] hover:text-[#0D0D15] font-exo2"
-          >
-            Launch a track
-          </Button>
-        </div>
-      </section>
+      
 
       {/* CTA */}
-      <section className="text-center py-20">
-        <Button size="lg" className="bg-[#FF00FF] text-white hover:bg-[#FF66B8] font-exo2">
+      <section className="text-center py-10">
+        <Link href="/create" className="bg-[#FF00FF] text-white hover:bg-[#FF66B8] font-exo2 px-6 py-3 rounded-md">
           Launch your own track in 1 minute
-        </Button>
+        </Link>
       </section>
 
-      {/* Footer */}
-      <footer className="text-center py-8 text-[#FF99D1] font-exo2">
-        <p>2024 Melofy, Inc.</p>
-      </footer>
+      
     </div>
   )
 }
