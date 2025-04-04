@@ -68,7 +68,7 @@ export const api = {
           gain: 0,
           ticker: "$DEFAULT",
           bondingCurve: 50,
-          audioUrl: "/placeholder-audio.mp3",
+          audioUrl: "https://v3.fal.media/files/panda/T-GP6cbpo1lgL8ll4oKGj_generated.wav",
           data: [{ price: 0.1, date: new Date().toISOString().split('T')[0] }],
         };
       }

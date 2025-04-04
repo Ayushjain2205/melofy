@@ -10,14 +10,17 @@ export default function Home() {
       image: "/placeholder.svg?height=64&width=64",
       price: 0.25,
       gain: 15.3,
+      ticker: "CYBER",
+      bondingCurve: 0.1,
+      audioUrl: "/songs/cyber-dreams.mp3",
       data: [
-        { price: 0.22 },
-        { price: 0.2 },
-        { price: 0.23 },
-        { price: 0.21 },
-        { price: 0.24 },
-        { price: 0.22 },
-        { price: 0.25 },
+        { price: 0.22, date: "2025-03-28" },
+        { price: 0.2, date: "2025-03-29" },
+        { price: 0.23, date: "2025-03-30" },
+        { price: 0.21, date: "2025-03-31" },
+        { price: 0.24, date: "2025-04-01" },
+        { price: 0.22, date: "2025-04-02" },
+        { price: 0.25, date: "2025-04-03" },
       ],
     },
     {
@@ -27,14 +30,17 @@ export default function Home() {
       image: "/placeholder.svg?height=64&width=64",
       price: 0.09,
       gain: -5.2,
+      ticker: "HRZN",
+      bondingCurve: 0.15,
+      audioUrl: "/songs/digital-horizon.mp3",
       data: [
-        { price: 0.1 },
-        { price: 0.11 },
-        { price: 0.095 },
-        { price: 0.1 },
-        { price: 0.085 },
-        { price: 0.09 },
-        { price: 0.09 },
+        { price: 0.1, date: "2025-03-28" },
+        { price: 0.11, date: "2025-03-29" },
+        { price: 0.095, date: "2025-03-30" },
+        { price: 0.1, date: "2025-03-31" },
+        { price: 0.085, date: "2025-04-01" },
+        { price: 0.09, date: "2025-04-02" },
+        { price: 0.09, date: "2025-04-03" },
       ],
     },
     {
@@ -44,14 +50,17 @@ export default function Home() {
       image: "/placeholder.svg?height=64&width=64",
       price: 0.06,
       gain: 3.4,
+      ticker: "QNTM",
+      bondingCurve: 0.12,
+      audioUrl: "/songs/quantum-pulse.mp3",
       data: [
-        { price: 0.058 },
-        { price: 0.059 },
-        { price: 0.061 },
-        { price: 0.057 },
-        { price: 0.062 },
-        { price: 0.059 },
-        { price: 0.06 },
+        { price: 0.058, date: "2025-03-28" },
+        { price: 0.059, date: "2025-03-29" },
+        { price: 0.061, date: "2025-03-30" },
+        { price: 0.057, date: "2025-03-31" },
+        { price: 0.062, date: "2025-04-01" },
+        { price: 0.059, date: "2025-04-02" },
+        { price: 0.06, date: "2025-04-03" },
       ],
     },
     {
@@ -61,14 +70,17 @@ export default function Home() {
       image: "/placeholder.svg?height=64&width=64",
       price: 0.18,
       gain: 22.7,
+      ticker: "NRAL",
+      bondingCurve: 0.08,
+      audioUrl: "/songs/neural-symphony.mp3",
       data: [
-        { price: 0.15 },
-        { price: 0.16 },
-        { price: 0.17 },
-        { price: 0.165 },
-        { price: 0.18 },
-        { price: 0.175 },
-        { price: 0.18 },
+        { price: 0.15, date: "2025-03-28" },
+        { price: 0.16, date: "2025-03-29" },
+        { price: 0.17, date: "2025-03-30" },
+        { price: 0.165, date: "2025-03-31" },
+        { price: 0.18, date: "2025-04-01" },
+        { price: 0.175, date: "2025-04-02" },
+        { price: 0.18, date: "2025-04-03" },
       ],
     },
   ]
@@ -122,9 +134,8 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center py-8 text-[#FF99D1] font-exo2">
-        <p>2024 © Melofy, Inc.</p>
+        <p>2024 Melofy, Inc.</p>
       </footer>
     </div>
   )
 }
-
