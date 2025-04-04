@@ -1,9 +1,9 @@
 import type React from "react"
 import "./globals.css"
 import { Orbitron, Audiowide, Exo_2, Press_Start_2P } from "next/font/google"
-// import { MusicPlayerProvider } from "@/app/contexts/MusicPlayerContext"
-// import { MusicPlayer } from "@/components/MusicPlayer"
-// import { Navbar } from "@/components/navbar"
+import { MusicPlayerProvider } from "@/app/contexts/MusicPlayerContext"
+import { MusicPlayer } from "@/components/MusicPlayer"
+import { Navbar } from "@/components/Navbar"
 
 // Load fonts with Next.js font system
 const orbitron = Orbitron({
@@ -45,11 +45,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${orbitron.variable} ${audiowide.variable} ${exo2.variable} ${pressStart2P.variable}`}>
       <body className={orbitron.className}>
-        {/* <MusicPlayerProvider>
-          <Navbar /> */}
+        <MusicPlayerProvider>
+          <Navbar />
           <main>{children}</main>
-          {/* <MusicPlayer />
-        </MusicPlayerProvider> */}
+          <MusicPlayer />
+        </MusicPlayerProvider>
       </body>
     </html>
   )
