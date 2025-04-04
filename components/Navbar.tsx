@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { client } from "@/lib/client"
+import { ConnectButton } from "thirdweb/react"
 
 export function Navbar() {
   return (
@@ -15,14 +17,15 @@ export function Navbar() {
         >
           <span className="retro-wave-text">MELOFY</span>
         </Link>
-        <div className="space-x-6">
+        <div className="space-x-6 flex items-center">
           <Link href="/create" className="text-[#FF99D1] hover:text-[#FF00FF] transition-colors font-exo2">
             Create
           </Link>
           <Link href="/" className="text-[#FF99D1] hover:text-[#FF00FF] transition-colors font-exo2">
             Explore
           </Link>
-          <Button className="bg-[#FF00FF] text-white hover:bg-[#FF66B8] font-exo2">Connect Wallet</Button>
+          {/* <Button className="bg-[#FF00FF] text-white hover:bg-[#FF66B8] font-exo2">Connect Wallet</Button> */}
+<ConnectButton client={client} />
         </div>
       </div>
     </nav>

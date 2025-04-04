@@ -1,5 +1,6 @@
 import type React from "react"
 import "./globals.css"
+import { ThirdwebProvider } from "thirdweb/react";
 import { Orbitron, Audiowide, Exo_2, Press_Start_2P } from "next/font/google"
 import { MusicPlayerProvider } from "@/app/contexts/MusicPlayerContext"
 import { MusicPlayer } from "@/components/MusicPlayer"
@@ -45,11 +46,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${orbitron.variable} ${audiowide.variable} ${exo2.variable} ${pressStart2P.variable}`}>
       <body className={orbitron.className}>
-        <MusicPlayerProvider>
-          <Navbar />
-          <main>{children}</main>
-          <MusicPlayer />
-        </MusicPlayerProvider>
+        <ThirdwebProvider>
+          <MusicPlayerProvider>
+            <Navbar />
+            <main>{children}</main>
+            <MusicPlayer />
+          </MusicPlayerProvider>
+        </ThirdwebProvider>
       </body>
     </html>
   )
