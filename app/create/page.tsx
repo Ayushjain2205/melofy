@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useActiveAccount } from "thirdweb/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -15,6 +16,7 @@ const genres = ["Synthwave", "Cyberpunk", "Vaporwave", "Chiptune", "Darksynth", 
 const moods = ["Energetic", "Melancholic", "Dreamy", "Intense", "Relaxed", "Mysterious"]
 
 export default function CreatePage() {
+  const activeAccount = useActiveAccount();
   const [songTitle, setSongTitle] = useState("")
   const [prompt, setPrompt] = useState("")
   const [genre, setGenre] = useState("")
@@ -25,6 +27,11 @@ export default function CreatePage() {
   const { currentSong, isPlaying, togglePlayPause, setCurrentSongById } = useMusicPlayer()
 
   const handleGenerate = async () => {
+    if (!activeAccount?.address) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+
     if (!prompt) {
       toast.error("Please enter a prompt for your song");
       return;
