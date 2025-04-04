@@ -19,7 +19,7 @@ export default function CreatePage() {
   const [prompt, setPrompt] = useState("")
   const [genre, setGenre] = useState("")
   const [mood, setMood] = useState("")
-  const [duration, setDuration] = useState(60)
+  const [duration, setDuration] = useState(30)
   const [generatedAudio, setGeneratedAudio] = useState<string | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const { currentSong, isPlaying, togglePlayPause, setCurrentSongById } = useMusicPlayer()
@@ -86,9 +86,8 @@ export default function CreatePage() {
   return (
     <div className="min-h-screen bg-[#0D0D15] text-white pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
+        <div className="text-center mb-6">
           <h1 className="text-5xl font-bold text-[#00FFFF] font-audiowide mb-4">Craft Your AI Melody</h1>
-          <p className="text-xl text-[#FF99D1] font-exo2">Transform your ideas into unique AI-generated music</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -159,9 +158,9 @@ export default function CreatePage() {
               </label>
               <Slider
                 id="duration"
-                min={30}
-                max={180}
-                step={10}
+                min={5}
+                max={60}
+                step={1}
                 value={[duration]}
                 onValueChange={(value) => setDuration(value[0])}
                 className="w-full"
