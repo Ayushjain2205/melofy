@@ -9,6 +9,7 @@ import SongPixelArt from "@/components/SongPixelArt"
 import { MusicPlayer } from "@/components/MusicPlayer"
 import { useMusicPlayer } from "@/app/contexts/MusicPlayerContext"
 import { Loader2, Play, Pause, Share2, Zap, Rocket } from "lucide-react"
+import { toast } from "sonner"
 
 const genres = ["Synthwave", "Cyberpunk", "Vaporwave", "Chiptune", "Darksynth", "Retrowave"]
 const moods = ["Energetic", "Melancholic", "Dreamy", "Intense", "Relaxed", "Mysterious"]
@@ -24,15 +25,51 @@ export default function CreatePage() {
   const { currentSong, isPlaying, togglePlayPause, setCurrentSongById } = useMusicPlayer()
 
   const handleGenerate = async () => {
-    setIsGenerating(true)
-    // TODO: Implement actual AI generation here
-    await new Promise((resolve) => setTimeout(resolve, 3000)) // Simulating generation time
-    const audioUrl = "/placeholder-audio.mp3" // Replace with actual generated audio
-    setGeneratedAudio(audioUrl)
-    setIsGenerating(false)
+    if (!prompt) {
+      toast.error("Please enter a prompt for your song");
+      return;
+    }
 
-    // Set the generated song as the current song in the music player
-    setCurrentSongById("generated-song-id")
+    setIsGenerating(true);
+    try {
+      // Create a detailed prompt combining all the user inputs
+      const fullPrompt = `Create a ${duration}-second ${genre ? genre.toLowerCase() : ''} music track${
+        mood ? ` with a ${mood.toLowerCase()} mood` : ''
+      }. ${prompt}`.trim();
+      
+      console.log('Sending generation request with prompt:', fullPrompt);
+
+      // Call our API endpoint
+      const response = await fetch('/api/music/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: fullPrompt }),
+      });
+
+      console.log('Response status:', response.status);
+      const data = await response.json();
+      console.log('Response data:', data);
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to generate music');
+      }
+
+      console.log('Setting generated audio URL:', data.audioUrl);
+      console.log('Request ID:', data.requestId);
+      setGeneratedAudio(data.audioUrl);
+
+      // Set the generated song as the current song in the music player
+      setCurrentSongById("generated-song-id");
+      
+      toast.success("Your AI song has been generated!");
+    } catch (error) {
+      console.error("Detailed error in handleGenerate:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to generate music. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
   }
 
   useEffect(() => {
@@ -214,4 +251,3 @@ export default function CreatePage() {
     </div>
   )
 }
-

@@ -5,6 +5,7 @@ import { Orbitron, Audiowide, Exo_2, Press_Start_2P } from "next/font/google"
 import { MusicPlayerProvider } from "@/app/contexts/MusicPlayerContext"
 import { MusicPlayer } from "@/components/MusicPlayer"
 import { Navbar } from "@/components/Navbar"
+import { Toaster } from "sonner"
 
 // Load fonts with Next.js font system
 const orbitron = Orbitron({
@@ -51,10 +52,20 @@ export default function RootLayout({
             <Navbar />
             <main>{children}</main>
             <MusicPlayer />
+            <Toaster 
+              theme="dark" 
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: '#1A1522',
+                  border: '1px solid #FF00FF',
+                  color: '#FF99D1'
+                }
+              }}
+            />
           </MusicPlayerProvider>
         </ThirdwebProvider>
       </body>
     </html>
   )
 }
-
