@@ -68,12 +68,9 @@ export default function SongPage({
 
   const handlePlayPause = () => {
     if (song && song.id !== currentSong?.id) {
-      setCurrentSongById(song.id).then(() => {
-        togglePlayPause()
-      })
-    } else {
-      togglePlayPause()
+      setCurrentSongById(song.id)
     }
+    togglePlayPause()
   }
 
   if (!song) return null

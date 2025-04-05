@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { Song } from "@/types/song";
 
 const generatePriceData = (startPrice: number, days: number) => {
@@ -49,16 +49,14 @@ const mockSongs: Song[] = [
   }
 ];
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request) {
   // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 500));
   
-  const song = mockSongs.find((s) => s.id === params.id);
+  const id = request.url.split('/').pop();
+  const song = mockSongs.find((s) => s.id === id);
   if (!song) {
-    console.warn(`Song with id ${params.id} not found. Returning a default song.`);
+    console.warn(`Song with id ${id} not found. Returning a default song.`);
     return NextResponse.json({
       id: "default",
       title: "Default Song",

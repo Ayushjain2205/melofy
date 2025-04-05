@@ -32,12 +32,10 @@ export function SongCard({ song }: SongCardProps) {
 
   const handlePlayPause = (e: React.MouseEvent) => {
     e.preventDefault()
-    if (currentSong?.id === song.id) {
-      togglePlayPause()
-    } else {
+    if (song && song.id !== currentSong?.id) {
       setCurrentSongById(song.id)
-      togglePlayPause()
     }
+    togglePlayPause()
   }
 
   return (

@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/songs')
+        const response = await fetch('/api/songs')
         const data = await response.json()
         if (Array.isArray(data)) {
           setSongs(data)
@@ -127,7 +127,17 @@ export default function Home() {
       <section className="max-w-3xl mx-auto px-6">
         <div className="space-y-2">
           {loading ? (
-            <div className="text-center py-4">Loading songs...</div>
+            <div className="flex flex-col items-center justify-center py-12 space-y-4">
+              <div className="relative w-32 h-32">
+                <div className="absolute inset-0 bg-[#FF00FF] rounded-full opacity-20 animate-ping"></div>
+                <div className="absolute inset-0 bg-[#FF00FF] rounded-full opacity-30 animate-pulse"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-24 h-24 border-4 border-[#FF00FF] border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              </div>
+              <p className="text-xl font-bold text-[#00FFFF] font-audiowide">Loading Songs...</p>
+              <p className="text-[#FF99D1] font-exo2">Discovering your next favorite tracks</p>
+            </div>
           ) : songs.length > 0 ? (
             songs.map((song) => (
               <SongCard key={song.id} song={song} />
