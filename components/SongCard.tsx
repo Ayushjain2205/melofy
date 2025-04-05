@@ -35,9 +35,8 @@ export function SongCard({ song }: SongCardProps) {
     if (currentSong?.id === song.id) {
       togglePlayPause()
     } else {
-      setCurrentSongById(song.id).then(() => {
-        togglePlayPause()
-      })
+      setCurrentSongById(song.id)
+      togglePlayPause()
     }
   }
 
@@ -77,10 +76,10 @@ export function SongCard({ song }: SongCardProps) {
             </ResponsiveContainer>
           </div>
           <div className="text-right">
-            <div className="font-mono text-[#FF00FF]">${song.price.toFixed(2)}</div>
+            <div className="font-mono text-[#FF00FF]">${(song.price || 0).toFixed(2)}</div>
             <div className={`${gainColor}`}>
               {isPositive ? "+" : ""}
-              {song.gain.toFixed(1)}%
+              {(song.gain || 0).toFixed(1)}%
             </div>
           </div>
           <Button className="bg-[#FF00FF] text-white hover:bg-[#FF66B8]">Trade</Button>

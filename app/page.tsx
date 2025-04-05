@@ -1,8 +1,32 @@
+"use client"
+
 import { SongCard } from "@/components/SongCard"
 import Link from "next/link"
+import { Song } from "@/types/song"
+import { useEffect, useState } from "react"
 
 export default function Home() {
-  const songs = [
+  const [songs, setSongs] = useState<Song[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/songs')
+        const data = await response.json()
+        if (Array.isArray(data)) {
+          setSongs(data)
+        }
+      } catch (error) {
+        console.error('Error fetching songs:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchSongs()
+  }, [])
+
+  const defaultSongs = [
     {
       id: "0xC479...bb62",
       title: "Cyber Dreams",
@@ -85,6 +109,8 @@ export default function Home() {
     },
   ]
 
+  const displaySongs = songs.length > 0 ? songs : defaultSongs;
+
   return (
     <div className="min-h-screen bg-[#0D0D15] text-white">
       {/* Hero */}
@@ -100,7 +126,13 @@ export default function Home() {
       {/* Song List */}
       <section className="max-w-3xl mx-auto px-6">
         <div className="space-y-2">
-          {songs.map((song) => (
+          {loading ? (
+            <div className="text-center py-4">Loading songs...</div>
+          ) : songs.length > 0 ? (
+            songs.map((song) => (
+              <SongCard key={song.id} song={song} />
+            ))
+          ) : defaultSongs.map((song) => (
             <SongCard key={song.id} song={song} />
           ))}
         </div>

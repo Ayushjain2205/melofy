@@ -6,9 +6,9 @@ interface SongPixelArtProps {
   price: number;
 }
 
-const SongPixelArt: React.FC<SongPixelArtProps> = ({ title, artist, price }) => {
+const SongPixelArt: React.FC<SongPixelArtProps> = ({ title = '', artist = '', price = 0 }) => {
   // Generate a unique color based on the input string
-  const generateColor = (str: string) => {
+  const generateColor = (str: string = '') => {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
