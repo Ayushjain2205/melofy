@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { useActiveAccount } from "thirdweb/react"
+import { supabase } from "@/utils/supabase"
+
+// Debug Supabase initialization
+console.log('=== DEBUG: Supabase Client ===');
+console.log('Supabase client initialized:', !!supabase);
+console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+console.log('Has Supabase key:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -26,7 +33,45 @@ export default function CreatePage() {
   const [isGenerating, setIsGenerating] = useState(false)
   const { currentSong, isPlaying, togglePlayPause, setCurrentSongById } = useMusicPlayer()
 
+  const saveSongToSupabase = async (audioUrl: string) => {
+    try {
+      console.log('Saving song to database...');
+      
+      // Save the song metadata to the database
+      const songData = {
+        title: songTitle || 'Untitled',
+        creator_address: activeAccount?.address,
+        genre: genre || null,
+        mood: mood || null,
+        duration: duration || 30,
+        prompt: prompt || '',
+        storage_path: audioUrl,
+        created_at: new Date().toISOString()
+      };
+
+      const { data: dbData, error: dbError } = await supabase
+        .from('songs')
+        .insert([songData]);
+
+      if (dbError) {
+        throw new Error(`Database error: ${dbError.message}`);
+      }
+
+      console.log('Successfully saved to database:', dbData);
+      
+      // Play the song with metadata
+      setCurrentSongById(audioUrl, { title: songTitle || 'Untitled', genre: genre || 'AI' });
+      toast.success('Song generated and saved successfully!');
+    } catch (error) {
+      console.error('Error saving/playing song:', error);
+      toast.error('Failed to save song');
+      throw error;
+    }
+  };
+
   const handleGenerate = async () => {
+    console.log('handleGenerate started');
+    console.log('Current wallet:', activeAccount?.address);
     if (!activeAccount?.address) {
       toast.error("Please connect your wallet first");
       return;
@@ -65,12 +110,26 @@ export default function CreatePage() {
 
       console.log('Setting generated audio URL:', data.audioUrl);
       console.log('Request ID:', data.requestId);
-      setGeneratedAudio(data.audioUrl);
 
-      // Set the generated song as the current song in the music player
-      setCurrentSongById("generated-song-id");
+      // Explicitly log before Supabase save attempt
+      console.log('=== SUPABASE SAVE STARTING ===');
       
-      toast.success("Your AI song has been generated!");
+      try {
+        if (!activeAccount?.address) {
+          throw new Error('No wallet address found');
+        }
+
+        // Play the generated audio
+        setGeneratedAudio(data.audioUrl);
+        await saveSongToSupabase(data.audioUrl);
+      } catch (supabaseError) {
+        console.error('Supabase save error:', supabaseError);
+        toast.error('Failed to save song to database');
+        throw supabaseError;
+      }
+      
+      toast.success("Your AI song has been generated and saved!");
+      setIsGenerating(false);
     } catch (error) {
       console.error("Detailed error in handleGenerate:", error);
       toast.error(error instanceof Error ? error.message : "Failed to generate music. Please try again.");
@@ -93,7 +152,7 @@ export default function CreatePage() {
   return (
     <div className="min-h-screen bg-[#0D0D15] text-white pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-6">
+        <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-[#00FFFF] font-audiowide mb-4">Craft Your AI Melody</h1>
         </div>
 

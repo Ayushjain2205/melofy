@@ -11,7 +11,7 @@ type MusicPlayerContextType = {
   duration: number
   volume: number
   togglePlayPause: () => void
-  setCurrentSongById: (id: string) => Promise<void>
+  setCurrentSongById: (url: string, metadata?: { title?: string; genre?: string }) => void
   seekTo: (time: number) => void
   setVolume: (volume: number) => void
   playNextSong: () => void
@@ -84,18 +84,25 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     setIsPlaying(!isPlaying)
   }, [isPlaying])
 
-  const setCurrentSongById = useCallback(async (id: string) => {
-    try {
-      const song = await api.songs.getOne(id)
-      setCurrentSong(song)
-      setCurrentTime(0)
-      setIsPlaying(false) // Don't auto-play, wait for user interaction
-      if (audioRef.current) {
-        audioRef.current.src = song.audioUrl
-        audioRef.current.load()
-      }
-    } catch (error) {
-      console.error('Error fetching song:', error)
+  const setCurrentSongById = useCallback((url: string, metadata?: { title?: string; genre?: string }) => {
+    const song: Song = {
+      id: url,
+      title: metadata?.title || 'Generated Song',
+      artist: metadata?.genre || 'AI',
+      audioUrl: url,
+      image: '',
+      price: 0,
+      gain: 1,
+      data: [{ price: 0, date: new Date().toISOString() }],
+      ticker: 'SONG',
+      bondingCurve: 0
+    }
+    setCurrentSong(song)
+    setCurrentTime(0)
+    if (audioRef.current) {
+      audioRef.current.src = url
+      audioRef.current.load()
+      setIsPlaying(false)
     }
   }, [])
 
